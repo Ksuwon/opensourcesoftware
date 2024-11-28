@@ -36,7 +36,9 @@ class Block(Basic):
     def collide(self):
         # ============================================
         # TODO: Implement an event when block collides with a ball
-        pass
+        self.alive = False
+        self.rect.size =(0,0)
+        return self.alive
 
 
 class Paddle(Basic):
@@ -68,7 +70,10 @@ class Ball(Basic):
     def collide_block(self, blocks: list):
         # ============================================
         # TODO: Implement an event when the ball hits a block
-        pass
+        for block in blocks:
+            if self.rect.colliderect(block.rect):
+                Block.collide(block)
+                self.dir = 360 - self.dir + random.randint(-5,5)
 
     def collide_paddle(self, paddle: Paddle) -> None:
         if self.rect.colliderect(paddle.rect):
